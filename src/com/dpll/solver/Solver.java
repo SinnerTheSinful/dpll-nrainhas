@@ -1,5 +1,7 @@
 package com.dpll.solver;
 
+import com.dpll.util.SolverUtil;
+
 public class Solver {
 	// Metodo solver dpll
 	public static boolean dpll(int[][] formula) {
@@ -39,12 +41,12 @@ public class Solver {
 		if(isValid) return true;
 		
 		//Pegamos um literal aleatório e sua negação
-		int[] random1 = new int[] {getRandomProposition(formulaSimples)};
-		int[] random2 = new int[] {getRandomProposition(formulaSimples) * (-1)};
+		int[] random1 = new int[] {SolverUtil.getRandomProposition(formulaSimples)};
+		int[] random2 = new int[] {SolverUtil.getRandomProposition(formulaSimples) * (-1)};
 		
 		//Somamos à formula
-		int[][] formulaAlterada1 = append(formulaSimples, random1);
-		int[][] formulaAlterada2 = append(formulaSimples, random2);
+		int[][] formulaAlterada1 = SolverUtil.append(formulaSimples, random1);
+		int[][] formulaAlterada2 = SolverUtil.append(formulaSimples, random2);
 		
 		//Verificamos se é verdade para o literal novo
 		if(dpll(formulaAlterada1)) {
@@ -113,30 +115,8 @@ public class Solver {
 		return formula;
 	}
 	
-	//Método utilitario para adicionar uma nova clausula na formula
-	private static int[][] append(int[][] array, int[] cell) {
-		int[][] appended = new int[array.length+1][];
-		for(int i = 0; i < array.length; i++) {
-			appended[i] = array[i];
-		}
-		appended[array.length] = cell;
-		return appended;
-	}
 	
-	//Método utilitário para pegar uma proposição não nula
-	private static int getRandomProposition(int[][] formula) {
-		int cell = 0;
-		for(int i = 0; i < formula.length; i++) {
-			if(formula[i].length != 0) {
-				for(int j = 0; j < formula[i].length; j++) {
-					if(formula[i][j] != 0) {
-						cell = formula[i][j];
-						break;
-					}
-				}
-			}
-		}
-		return cell;
-	}
+	
+	
 	
 }
