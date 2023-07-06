@@ -41,25 +41,16 @@ public class Solver {
 		if(isValid) return true;
 		
 		//Pegamos um literal aleatório e sua negação
-		int[] random1 = new int[] {SolverUtil.getRandomProposition(formulaSimples)};
-		int[] random2 = new int[] {SolverUtil.getRandomProposition(formulaSimples) * (-1)};
+		int prop = SolverUtil.getRandomProposition(formulaSimples);
+		int[] random1 = new int[] {prop};
+		int[] random2 = new int[] {prop * (-1)};
 		
 		//Somamos à formula
 		int[][] formulaAlterada1 = SolverUtil.append(formulaSimples, random1);
 		int[][] formulaAlterada2 = SolverUtil.append(formulaSimples, random2);
 		
-		//Verificamos se é verdade para o literal novo
-		if(dpll(formulaAlterada1)) {
-			return true;
-			
-			//Ou sua negação
-		} else if(dpll(formulaAlterada2)) {
-			return true;
-			
-			//Ou é falso de vez
-		} else {
-			return false;
-		}
+		//Verificamos se é verdade para o literal novo ou sua negação e retornamos o seguinte resultado
+		return dpll(formulaAlterada1) || dpll(formulaAlterada2);
 	}
 	
 	//Método simplifica
