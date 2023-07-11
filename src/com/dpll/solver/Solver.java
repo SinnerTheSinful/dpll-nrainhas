@@ -6,10 +6,18 @@ import com.dpll.util.SolverUtil;
 
 public class Solver {
 	
-	public static ArrayList<Integer> clausulasValidas = new ArrayList<Integer>();
+	public ArrayList<Integer> clausulasValidas = new ArrayList<Integer>();
+	public int size;
+	
+	public Solver(int size) {
+		this.size = size;
+	}
 	
 	// Metodo solver dpll
-	public static boolean dpll(int[][] formula) {
+	public boolean dpll(int[][] formula) {
+		
+		
+		
 		//Simplifica fórmula inicial
 		int[][] formulaSimples = simplifica(formula);
 		
@@ -56,8 +64,11 @@ public class Solver {
 		
 		//Verificamos se é verdade para o literal novo ou sua negação e retornamos o seguinte resultado
 		if(dpll(formulaAlterada1)) {
+			if(random1[0] > 0) clausulasValidas.add(prop);
 			return true;
 		} else if(dpll(formulaAlterada2)){
+			clausulasValidas.remove(clausulasValidas.size() - 1);
+			if(random2[0] > 0) clausulasValidas.add(prop * -1);
 			return true;
 		} else {
 			return false;
@@ -65,7 +76,7 @@ public class Solver {
 	}
 	
 	//Método simplifica
-	private static int[][] simplifica(int[][] formula) {
+	private int[][] simplifica(int[][] formula) {
 		
 		//Variável aqui para garantir que o loop só termina quando autorizado
 		boolean out = false;
