@@ -1,8 +1,13 @@
 package com.dpll.solver;
 
+import java.util.ArrayList;
+
 import com.dpll.util.SolverUtil;
 
 public class Solver {
+	
+	public static ArrayList<Integer> clausulasValidas = new ArrayList<Integer>();
+	
 	// Metodo solver dpll
 	public static boolean dpll(int[][] formula) {
 		//Simplifica fórmula inicial
@@ -46,11 +51,17 @@ public class Solver {
 		int[] random2 = new int[] {prop * (-1)};
 		
 		//Somamos à formula
-		int[][] formulaAlterada1 = SolverUtil.append(formulaSimples, random1);
-		int[][] formulaAlterada2 = SolverUtil.append(formulaSimples, random2);
+		int[][] formulaAlterada1 = SolverUtil.append(SolverUtil.cloneArray(formulaSimples), random1);
+		int[][] formulaAlterada2 = SolverUtil.append(SolverUtil.cloneArray(formulaSimples), random2);
 		
 		//Verificamos se é verdade para o literal novo ou sua negação e retornamos o seguinte resultado
-		return dpll(formulaAlterada1) || dpll(formulaAlterada2);
+		if(dpll(formulaAlterada1)) {
+			return true;
+		} else if(dpll(formulaAlterada2)){
+			return true;
+		} else {
+			return false;
+		}
 	}
 	
 	//Método simplifica

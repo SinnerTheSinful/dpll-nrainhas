@@ -21,6 +21,7 @@ public final class SolverUtil {
 			}
 			Random rand = new Random();
 			int ret = cellList.get(rand.nextInt(cellList.size()));
+			
 			return ret;
 		}
 		
@@ -32,6 +33,18 @@ public final class SolverUtil {
 			}
 			appended[array.length] = cell;
 			return appended;
+		}
+		
+		public static int[][] cloneArray(int[][] another){
+			int[][] novo = new int[another.length][];
+			
+			for(int i = 0; i < novo.length; i++) {
+				novo[i] = new int[another[i].length];
+				for(int j = 0; j < another[i].length; j++) {
+					novo[i][j] = another[i][j];
+				}
+			}
+			return novo;
 		}
 
 }

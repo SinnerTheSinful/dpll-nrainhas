@@ -1,19 +1,31 @@
 package com.dpll.main;
 
+import com.dpll.rainhas.Rainhas;
 import com.dpll.solver.Solver;
+
+import java.util.ArrayList;
+import java.util.Scanner;
 
 public class Main {
 
 	public static void main(String[] args) {
-	
-		int[][] formula = new int[][] {
-			{1,2,3},
-			{-2,3,4},
-			{-3,-4,1},
-			{4,-1,3}
-		};
+		Scanner sc = new Scanner(System.in);
 		
-		System.out.println(Solver.dpll(formula));
+		
+		int size = sc.nextInt();
+		
+		sc.close();
+		
+		ArrayList<ArrayList<Integer>> formula = Rainhas.createClausulas(size);
+		int[][] formulaConvertida = new int[formula.size()][];
+		
+		
+		for(int i = 0; i < formula.size(); i++) {
+			formulaConvertida[i] = formula.get(i).stream().mapToInt(j -> j).toArray();
+		}
+		
+		System.out.println(Solver.dpll(formulaConvertida));
+		
 		
 	}
 
